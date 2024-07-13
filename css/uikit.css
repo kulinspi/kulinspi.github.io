@@ -18,7 +18,7 @@ html {
   /* 2 */
   -webkit-text-size-adjust: 100%;
   /* 3 */
-  background: #A71717;
+  background: #5E5E5E;
   color: #666;
 }
 /*
@@ -5058,7 +5058,7 @@ ul.uk-nav-sub {
 /* Container
  ========================================================================== */
 .uk-navbar-container:not(.uk-navbar-transparent) {
-  background: #A71717;
+  background: #5E5E5E;
 }
 /* Groups
  ========================================================================== */
