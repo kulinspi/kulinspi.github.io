@@ -5,7 +5,7 @@
 /*
  * 1. Set `font-size` to support `rem` units
  * 2. Prevent adjustments of font size after orientation changes in iOS.
- * 3. Style
+ * 3. Style 
  */
 
  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
