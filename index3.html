@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name — Software Engineer</title>
+<meta name="description" content="CV and selected projects of Your Name, a software engineer specialising in distributed systems.">
+<style>
+  :root {
+    --bg: #fdfdfc;
+    --fg: #1a1a18;
+    --muted: #6b6b66;
+    --line: #e4e4df;
+    --accent: #2f6f4f;
+    --card: #ffffff;
+    --max: 46rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12120f;
+      --fg: #ecece7;
+      --muted: #9b9b93;
+      --line: #2a2a25;
+      --accent: #7fc79b;
+      --card: #191916;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    padding: 4rem 1.5rem 6rem;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main { max-width: var(--max); margin: 0 auto; }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* ---------- Header ---------- */
+
+  header { margin-bottom: 3.5rem; }
+
+  h1 {
+    font-size: clamp(1.9rem, 6vw, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+    font-weight: 650;
+  }
+
+  .role {
+    font-size: 1.05rem;
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    font-size: 0.925rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Sections ---------- */
+
+  section { margin-bottom: 3.25rem; }
+
+  h2 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  .lede { font-size: 1.05rem; }
+
+  /* ---------- Experience ---------- */
+
+  .job {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0.25rem 1.5rem;
+    padding-bottom: 1.75rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .job:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+
+  .when {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.15rem;
+  }
+
+  .job h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.15rem;
+  }
+
+  .where {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 0.7rem;
+  }
+
+  .job ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  .job li { margin-bottom: 0.35rem; }
+  .job li::marker { color: var(--muted); }
+
+  /* ---------- Projects ---------- */
+
+  .projects {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+
+  .project {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .project:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .project h3 {
+    font-size: 0.975rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+  }
+
+  .project h3 a { color: inherit; }
+  .project h3 a:hover { color: var(--accent); text-decoration: none; }
+
+  .project p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 0.9rem;
+  }
+
+  .tags {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+
+  .tags span {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem;
+  }
+
+  /* ---------- Skills ---------- */
+
+  dl.skills {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0.6rem 1.5rem;
+    margin: 0;
+    font-size: 0.925rem;
+  }
+
+  dl.skills dt { color: var(--muted); }
+  dl.skills dd { margin: 0; }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ---------- Small screens ---------- */
+
+  @media (max-width: 34rem) {
+    body { padding: 2.5rem 1.15rem 4rem; }
+
+    .job,
+    dl.skills {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
+
+    .job .when { padding-top: 0; order: -1; }
+    dl.skills dt { margin-top: 0.6rem; }
+  }
+
+  /* ---------- Print (use as a real CV) ---------- */
+
+  @media print {
+    body { padding: 0; font-size: 11pt; background: #fff; color: #000; }
+    a { color: #000; text-decoration: none; }
+    .project { break-inside: avoid; border-color: #ccc; }
+    .job { break-inside: avoid; }
+    footer { display: none; }
+    section { margin-bottom: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <header>
+    <h1>Your Name</h1>
+    <p class="role">Software Engineer — distributed systems & developer tooling</p>
+    <div class="contact">
+      <a href="mailto:you@example.com">you@example.com</a>
+      <a href="https://github.com/yourhandle">github.com/yourhandle</a>
+      <a href="https://linkedin.com/in/yourhandle">linkedin.com/in/yourhandle</a>
+      <span>Berlin, Germany</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="about">
+    <h2 id="about">About</h2>
+    <p class="lede">
+      I build backend systems that stay boring under load. Six years across
+      fintech and infrastructure, mostly in Go and Python, with a soft spot for
+      observability and anything that removes a manual step from someone's day.
+    </p>
+    <p>
+      Currently looking for a senior role on a small platform or infrastructure
+      team where I can own a system end to end.
+    </p>
+  </section>
+
+  <section aria-labelledby="experience">
+    <h2 id="experience">Experience</h2>
+
+    <article class="job">
+      <div class="when">2023 — Present</div>
+      <div>
+        <h3>Senior Software Engineer</h3>
+        <p class="where">Acme Payments · Berlin</p>
+        <ul>
+          <li>Led the migration from a monolithic ledger to an event-sourced service handling 40M transactions/month with zero downtime.</li>
+          <li>Cut p99 checkout latency from 840ms to 190ms by replacing synchronous fraud checks with a streaming decision pipeline.</li>
+          <li>Mentored four engineers; introduced design-review and on-call runbook practices now used org-wide.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job">
+      <div class="when">2021 — 2023</div>
+      <div>
+        <h3>Software Engineer</h3>
+        <p class="where">Northwind Cloud · Remote</p>
+        <ul>
+          <li>Built the internal deployment CLI used by 200+ engineers, reducing average release time from 25 minutes to 4.</li>
+          <li>Owned the metrics pipeline (Prometheus + Grafana), cutting alert noise by 70% through better aggregation and SLOs.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job">
+      <div class="when">2019 — 2021</div>
+      <div>
+        <h3>Junior Backend Developer</h3>
+        <p class="where">Studio Kestrel · Hamburg</p>
+        <ul>
+          <li>Shipped REST and GraphQL APIs for client products in Django and PostgreSQL.</li>
+          <li>Automated a manual reporting workflow, saving roughly 12 hours of analyst time per week.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <section aria-labelledby="projects">
+    <h2 id="projects">Selected projects</h2>
+    <div class="projects">
+
+      <article class="project">
+        <h3><a href="https://github.com/yourhandle/queuelens">Queuelens</a></h3>
+        <p>A single-binary queue inspector that renders job-flow graphs for SQS, RabbitMQ and Redis streams. 1.2k stars.</p>
+        <div class="tags"><span>Go</span><span>CLI</span><span>Open source</span></div>
+      </article>
+
+      <article class="project">
+        <h3><a href="https://github.com/yourhandle/tinyledger">Tinyledger</a></h3>
+        <p>Double-entry accounting library with immutable append-only storage. Used in production by three small SaaS products.</p>
+        <div class="tags"><span>Python</span><span>PostgreSQL</span></div>
+      </article>
+
+      <article class="project">
+        <h3><a href="https://example.com/notes">Field notes</a></h3>
+        <p>Short essays on reliability engineering and the unglamorous work of keeping systems running. ~4k monthly readers.</p>
+        <div class="tags"><span>Writing</span><span>Static site</span></div>
+      </article>
+
+      <article class="project">
+        <h3><a href="https://github.com/yourhandle/hoverboard">Hoverboard</a></h3>
+        <p>Weekend project: a keyboard-driven browser tab switcher with fuzzy matching and per-window scoping.</p>
+        <div class="tags"><span>TypeScript</span><span>Extension</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section aria-labelledby="skills">
+    <h2 id="skills">Skills</h2>
+    <dl class="skills">
+      <dt>Languages</dt>
+      <dd>Go, Python, TypeScript, SQL</dd>
+      <dt>Infrastructure</dt>
+      <dd>Kubernetes, Terraform, AWS, Docker, GitHub Actions</dd>
+      <dt>Data</dt>
+      <dd>PostgreSQL, Kafka, Redis, ClickHouse</dd>
+      <dt>Practices</dt>
+      <dd>Observability, incident response, API design, mentoring</dd>
+    </dl>
+  </section>
+
+  <section aria-labelledby="education">
+    <h2 id="education">Education</h2>
+    <div class="job">
+      <div class="when">2015 — 2019</div>
+      <div>
+        <h3>BSc Computer Science</h3>
+        <p class="where">University of Somewhere · Thesis on consensus latency in geo-distributed stores</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Your Name</span>
+    <span>Built with plain HTML and CSS</span>
+  </footer>
+
+</main>
+</body>
+</html>
