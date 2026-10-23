@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name — Software Engineer</title>
+<meta name="description" content="CV, publications and selected projects of Your Name, a software engineer specialising in distributed systems.">
+
+<script>
+  /* Pick the theme before first paint so there is no flash of the wrong palette. */
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = saved || (dark ? 'night' : 'paper');
+    } catch (e) { /* private mode: fall back to the CSS default */ }
+  })();
+</script>
+
+<style>
+  :root {
+    --paper:      #f7f0d8;
+    --paper-hi:   #fffaf0;
+    --ink:        #2a2419;
+    --ink-soft:   #6f6552;
+    --rule:       #d8c9a3;
+    --accent:     #a1501f;
+    --accent-bg:  #f0e2c2;
+    --shadow:     rgba(90, 72, 38, .18);
+
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans:  ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --max: 46rem;
+  }
+
+  [data-theme="night"] {
+    --paper:     #17140f;
+    --paper-hi:  #201c15;
+    --ink:       #ece2cc;
+    --ink-soft:  #a2957c;
+    --rule:      #3a3326;
+    --accent:    #e0a45f;
+    --accent-bg: #2b2419;
+    --shadow:    rgba(0, 0, 0, .5);
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+
+  body {
+    margin: 0;
+    padding: 0 1.5rem 6rem;
+    background: var(--paper);
+    color: var(--ink);
+    font: 16px/1.65 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Faint paper grain */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding-top: 3.5rem;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* ---------- Sticky nav ---------- */
+
+  .toc {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin: 0 -1.5rem;
+    padding: 0 1.5rem;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .toc-inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: var(--max);
+    margin: 0 auto;
+    height: 3.25rem;
+  }
+
+  .toc-home {
+    font: 600 .8rem/1 var(--mono);
+    letter-spacing: .08em;
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: .35rem .5rem;
+    flex: none;
+  }
+
+  .toc-home:hover { text-decoration: none; border-color: var(--accent); color: var(--accent); }
+
+  .toc-list {
+    display: flex;
+    gap: .25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex: 1 1 auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .toc-list::-webkit-scrollbar { display: none; }
+
+  .toc-list a {
+    display: block;
+    white-space: nowrap;
+    font: 500 .78rem/1 var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--ink-soft);
+    padding: .45rem .55rem;
+    border-radius: 4px;
+  }
+
+  .toc-list a:hover { color: var(--ink); text-decoration: none; background: var(--accent-bg); }
+
+  .toc-list a[aria-current="true"] {
+    color: var(--accent);
+    background: var(--accent-bg);
+  }
+
+  .toc-actions { display: flex; gap: .4rem; flex: none; }
+
+  .btn {
+    font: 500 .78rem/1 var(--mono);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: .45rem .6rem;
+    cursor: pointer;
+  }
+
+  .btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- Header ---------- */
+
+  header { margin-bottom: 3.5rem; }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 6.5vw, 2.9rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin: 0 0 .6rem;
+  }
+
+  .role {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    margin: 0 0 1.25rem;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font: 500 .76rem/1 var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border-radius: 999px;
+    padding: .4rem .75rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .dot {
+    width: .45rem;
+    height: .45rem;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .4rem 1.25rem;
+    font-size: .925rem;
+  }
+
+  .copy {
+    font: 500 .72rem/1 var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px dashed var(--rule);
+    border-radius: 4px;
+    padding: .3rem .45rem;
+    cursor: pointer;
+  }
+
+  .copy:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- Sections ---------- */
+
+  section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 4.5rem;
+  }
+
+  h2 {
+    font: 600 .72rem/1 var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: var(--ink-soft);
+    margin: 0 0 1.5rem;
+    padding-bottom: .65rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  .lede { font-size: 1.05rem; }
+
+  /* ---------- Publications ---------- */
+
+  .pubs {
+    list-style: none;
+    counter-reset: pub;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pub {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0 1rem;
+    padding: .95rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pub:last-child { border-bottom: 0; padding-bottom: 0; }
+
+  .pub::before {
+    counter-increment: pub;
+    content: counter(pub, decimal-leading-zero);
+    font: 400 .72rem/1.9 var(--mono);
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pub-body {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .15rem 1rem;
+    align-items: baseline;
+    color: inherit;
+  }
+
+  .pub-body:hover { text-decoration: none; }
+
+  .pub-title {
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  .pub-body:hover .pub-title {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .pub-meta {
+    grid-column: 1;
+    font-size: .85rem;
+    color: var(--ink-soft);
+  }
+
+  .pub-file {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: center;
+    font: 500 .68rem/1 var(--mono);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px dashed var(--rule);
+    border-radius: 3px;
+    padding: .3rem .45rem;
+    white-space: nowrap;
+  }
+
+  .pub-body:hover .pub-file { border-color: var(--accent); }
+
+  /* ---------- Experience ---------- */
+
+  .job {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: .25rem 1.5rem;
+    padding-bottom: 1.75rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .job:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+
+  .when {
+    font: 400 .8rem/1.5 var(--mono);
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+    padding-top: .15rem;
+  }
+
+  .job h3 { font-size: 1rem; font-weight: 650; margin: 0 0 .15rem; }
+
+  .where { font-size: .9rem; color: var(--ink-soft); margin: 0 0 .7rem; }
+
+  .job ul { margin: 0; padding-left: 1.1rem; font-size: .95rem; }
+  .job li { margin-bottom: .35rem; }
+  .job li::marker { color: var(--accent); }
+
+  /* ---------- Project filters ---------- */
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .chip {
+    font: 500 .75rem/1 var(--mono);
+    letter-spacing: .04em;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: .4rem .7rem;
+    cursor: pointer;
+  }
+
+  .chip:hover { color: var(--accent); border-color: var(--accent); }
+
+  .chip.is-on {
+    color: var(--paper-hi);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .filter-status {
+    font: 400 .78rem/1.4 var(--mono);
+    color: var(--ink-soft);
+    margin: 0 0 1.25rem;
+    min-height: 1.1em;
+  }
+
+  /* ---------- Projects ---------- */
+
+  .projects {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+
+  .project {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-hi);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1.15rem 1.25rem;
+    box-shadow: 3px 3px 0 var(--shadow);
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+
+  .project:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 var(--shadow);
+    border-color: var(--accent);
+  }
+
+  .project[hidden] { display: none; }
+
+  .project h3 {
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin: 0 0 .4rem;
+  }
+
+  .project h3 a { color: var(--ink); }
+  .project h3 a:hover { color: var(--accent); text-decoration: none; }
+
+  .project p { font-size: .9rem; color: var(--ink-soft); margin: 0 0 .9rem; }
+
+  .tags {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+  }
+
+  .tag {
+    font: 500 .7rem/1 var(--mono);
+    letter-spacing: .03em;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: .22rem .55rem;
+    cursor: pointer;
+  }
+
+  .tag:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- Skills ---------- */
+
+  dl.skills {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: .6rem 1.5rem;
+    margin: 0;
+    font-size: .925rem;
+  }
+
+  dl.skills dt { color: var(--ink-soft); font-family: var(--mono); font-size: .8rem; padding-top: .1rem; }
+  dl.skills dd { margin: 0; }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    font: 400 .78rem/1.6 var(--mono);
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Toast ---------- */
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translate(-50%, 1.5rem);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--ink);
+    color: var(--paper);
+    font: 500 .8rem/1 var(--mono);
+    letter-spacing: .04em;
+    padding: .7rem 1rem;
+    border-radius: 4px;
+    box-shadow: 0 6px 20px var(--shadow);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+
+  .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+  /* ---------- Reveal on scroll ---------- */
+
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+
+  .reveal-ready [data-reveal].is-in { opacity: 1; transform: none; }
+
+  /* ---------- Small screens ---------- */
+
+  @media (max-width: 36rem) {
+    body { padding: 0 1.15rem 4rem; }
+    .toc { margin: 0 -1.15rem; padding: 0 1.15rem; }
+    .toc-inner { gap: .6rem; }
+    .toc-list a { padding: .45rem .4rem; }
+
+    .job,
+    dl.skills { grid-template-columns: 1fr; gap: .35rem; }
+
+    .job .when { order: -1; padding-top: 0; }
+    dl.skills dt { margin-top: .7rem; }
+
+    .pub { grid-template-columns: 1.5rem 1fr; gap: 0 .6rem; }
+    .pub-body { grid-template-columns: 1fr; }
+    .pub-file { grid-column: 1; grid-row: auto; justify-self: start; margin-top: .5rem; }
+  }
+
+  /* ---------- Print ---------- */
+
+  @media print {
+    body { padding: 0; background: #fff; color: #000; font-size: 10.5pt; }
+    body::after { display: none; }
+    .toc, .toast, .filters, .filter-status, .copy, .status { display: none !important; }
+    main { padding-top: 0; }
+    a { color: #000; text-decoration: none; }
+    .project { box-shadow: none; border-color: #ccc; break-inside: avoid; }
+    .job { break-inside: avoid; }
+    .pub { break-inside: avoid; }
+    .pub-file { border-color: #999; color: #000; }
+    .reveal-ready [data-reveal] { opacity: 1 !important; transform: none !important; }
+    section { margin-bottom: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="toc" aria-label="Page sections">
+  <div class="toc-inner">
+    <a class="toc-home" href="#top">YN</a>
+    <ul class="toc-list">
+      <li><a href="#about">About</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+    </ul>
+    <div class="toc-actions">
+      <button class="btn" id="themeBtn" type="button" aria-pressed="false">Night</button>
+      <button class="btn" id="printBtn" type="button">Print</button>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+  <header data-reveal>
+    <h1>Your Name</h1>
+    <p class="role">Software Engineer — distributed systems & developer tooling</p>
+    <p class="status"><span class="dot" aria-hidden="true"></span>Open to senior backend roles</p>
+    <div class="contact">
+      <a href="mailto:you@example.com">you@example.com</a>
+      <button class="copy" type="button" data-copy="you@example.com">Copy</button>
+      <a href="https://github.com/yourhandle">github.com/yourhandle</a>
+      <a href="https://linkedin.com/in/yourhandle">linkedin.com/in/yourhandle</a>
+      <span>Berlin, Germany</span>
+    </div>
+  </header>
+
+  <section id="about" aria-labelledby="about-h" data-reveal>
+    <h2 id="about-h">About</h2>
+    <p class="lede">
+      I build backend systems that stay boring under load. Six years across
+      fintech and infrastructure, mostly in Go and Python, with a soft spot for
+      observability and anything that removes a manual step from someone's day.
+    </p>
+    <p>
+      Currently looking for a senior role on a small platform or infrastructure
+      team where I can own a system end to end.
+    </p>
+  </section>
+
+  <section id="publications" aria-labelledby="publications-h">
+    <h2 id="publications-h">Publications</h2>
+    <ol class="pubs">
+
+      <li class="pub" data-reveal>
+        <a class="pub-body" href="papers/tail-latency-consensus.pdf" target="_blank" rel="noopener">
+          <span class="pub-title">Measuring tail latency in geo-distributed consensus</span>
+          <span class="pub-meta">With A. Rivera, M. Okafor · USENIX ATC 2024</span>
+          <span class="pub-file">PDF · 1.2 MB</span>
+        </a>
+      </li>
+
+      <li class="pub" data-reveal>
+        <a class="pub-body" href="papers/event-sourcing-field-report.pdf" target="_blank" rel="noopener">
+          <span class="pub-title">Event sourcing without the ceremony: a field report</span>
+          <span class="pub-meta">ACM Queue · Vol. 21, No. 4 · 2023</span>
+          <span class="pub-file">PDF · 640 KB</span>
+        </a>
+      </li>
+
+      <li class="pub" data-reveal>
+        <a class="pub-body" href="papers/slo-playbook-small-teams.pdf" target="_blank" rel="noopener">
+          <span class="pub-title">SLOs for small teams: a practical playbook</span>
+          <span class="pub-meta">Technical report · Northwind Cloud · 2022</span>
+          <span class="pub-file">PDF · 310 KB</span>
+        </a>
+      </li>
+
+      <li class="pub" data-reveal>
+        <a class="pub-body" href="papers/observability-debt.pdf" target="_blank" rel="noopener">
+          <span class="pub-title">Observability debt: why dashboards rot</span>
+          <span class="pub-meta">With L. Brandt · SREcon Europe 2022</span>
+          <span class="pub-file">PDF · 880 KB</span>
+        </a>
+      </li>
+
+    </ol>
+  </section>
+
+  <section id="experience" aria-labelledby="experience-h">
+    <h2 id="experience-h">Experience</h2>
+
+    <article class="job" data-reveal>
+      <div class="when">2023 — Present</div>
+      <div>
+        <h3>Senior Software Engineer</h3>
+        <p class="where">Acme Payments · Berlin</p>
+        <ul>
+          <li>Led the migration from a monolithic ledger to an event-sourced service handling 40M transactions/month with zero downtime.</li>
+          <li>Cut p99 checkout latency from 840ms to 190ms by replacing synchronous fraud checks with a streaming decision pipeline.</li>
+          <li>Mentored four engineers; introduced design-review and on-call runbook practices now used org-wide.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job" data-reveal>
+      <div class="when">2021 — 2023</div>
+      <div>
+        <h3>Software Engineer</h3>
+        <p class="where">Northwind Cloud · Remote</p>
+        <ul>
+          <li>Built the internal deployment CLI used by 200+ engineers, reducing average release time from 25 minutes to 4.</li>
+          <li>Owned the metrics pipeline (Prometheus + Grafana), cutting alert noise by 70% through better aggregation and SLOs.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job" data-reveal>
+      <div class="when">2019 — 2021</div>
+      <div>
+        <h3>Junior Backend Developer</h3>
+        <p class="where">Studio Kestrel · Hamburg</p>
+        <ul>
+          <li>Shipped REST and GraphQL APIs for client products in Django and PostgreSQL.</li>
+          <li>Automated a manual reporting workflow, saving roughly 12 hours of analyst time per week.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <section id="projects" aria-labelledby="projects-h">
+    <h2 id="projects-h">Selected projects</h2>
+
+    <div class="filters" role="group" aria-label="Filter projects by technology">
+      <button class="chip is-on" type="button" data-tag="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-tag="go" aria-pressed="false">Go</button>
+      <button class="chip" type="button" data-tag="python" aria-pressed="false">Python</button>
+      <button class="chip" type="button" data-tag="typescript" aria-pressed="false">TypeScript</button>
+      <button class="chip" type="button" data-tag="writing" aria-pressed="false">Writing</button>
+    </div>
+    <p class="filter-status" id="filterStatus" aria-live="polite"></p>
+
+    <div class="projects" id="projectGrid">
+
+      <article class="project" data-reveal data-tags="go cli open-source">
+        <h3><a href="https://github.com/yourhandle/queuelens">Queuelens</a></h3>
+        <p>A single-binary queue inspector that renders job-flow graphs for SQS, RabbitMQ and Redis streams. 1.2k stars.</p>
+        <div class="tags">
+          <button class="tag" type="button" data-tag="go">Go</button>
+          <button class="tag" type="button" data-tag="cli">CLI</button>
+          <button class="tag" type="button" data-tag="open-source">Open source</button>
+        </div>
+      </article>
+
+      <article class="project" data-reveal data-tags="python postgresql">
+        <h3><a href="https://github.com/yourhandle/tinyledger">Tinyledger</a></h3>
+        <p>Double-entry accounting library with immutable append-only storage. Used in production by three small SaaS products.</p>
+        <div class="tags">
+          <button class="tag" type="button" data-tag="python">Python</button>
+          <button class="tag" type="button" data-tag="postgresql">PostgreSQL</button>
+        </div>
+      </article>
+
+      <article class="project" data-reveal data-tags="writing">
+        <h3><a href="https://example.com/notes">Field notes</a></h3>
+        <p>Short essays on reliability engineering and the unglamorous work of keeping systems running. ~4k monthly readers.</p>
+        <div class="tags">
+          <button class="tag" type="button" data-tag="writing">Writing</button>
+          <button class="tag" type="button" data-tag="static-site">Static site</button>
+        </div>
+      </article>
+
+      <article class="project" data-reveal data-tags="typescript extension">
+        <h3><a href="https://github.com/yourhandle/hoverboard">Hoverboard</a></h3>
+        <p>Weekend project: a keyboard-driven browser tab switcher with fuzzy matching and per-window scoping.</p>
+        <div class="tags">
+          <button class="tag" type="button" data-tag="typescript">TypeScript</button>
+          <button class="tag" type="button" data-tag="extension">Extension</button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-h" data-reveal>
+    <h2 id="skills-h">Skills</h2>
+    <dl class="skills">
+      <dt>Languages</dt>
+      <dd>Go, Python, TypeScript, SQL</dd>
+      <dt>Infrastructure</dt>
+      <dd>Kubernetes, Terraform, AWS, Docker, GitHub Actions</dd>
+      <dt>Data</dt>
+      <dd>PostgreSQL, Kafka, Redis, ClickHouse</dd>
+      <dt>Practices</dt>
+      <dd>Observability, incident response, API design, mentoring</dd>
+    </dl>
+  </section>
+
+  <section id="education" aria-labelledby="education-h" data-reveal>
+    <h2 id="education-h">Education</h2>
+    <div class="job">
+      <div class="when">2015 — 2019</div>
+      <div>
+        <h3>BSc Computer Science</h3>
+        <p class="where">University of Somewhere · Thesis on consensus latency in geo-distributed stores</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Your Name</span>
+    <span>Hand-written HTML, CSS and a little JS</span>
+  </footer>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+
+  /* ---------------- Theme toggle ---------------- */
+
+  var themeBtn = document.getElementById('themeBtn');
+
+  function syncThemeBtn() {
+    var night = root.dataset.theme === 'night';
+    themeBtn.textContent = night ? 'Day' : 'Night';
+    themeBtn.setAttribute('aria-pressed', String(night));
+    themeBtn.setAttribute('aria-label', night ? 'Switch to paper theme' : 'Switch to night theme');
+  }
+
+  themeBtn.addEventListener('click', function () {
+    var next = root.dataset.theme === 'night' ? 'paper' : 'night';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncThemeBtn();
+  });
+
+  syncThemeBtn();
+
+  /* ---------------- Toast ---------------- */
+
+  var toast = document.getElementById('toast');
+  var toastTimer;
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.classList.remove('is-visible');
+    }, 2200);
+  }
+
+  /* ---------------- Copy email ---------------- */
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(function () { return true; })
+        .catch(function () { return legacyCopy(text); });
+    }
+    return Promise.resolve(legacyCopy(text));
+  }
+
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  document.addEventListener('click', function (event) {
+    var btn = event.target.closest('[data-copy]');
+    if (!btn) return;
+    copyText(btn.dataset.copy).then(function (ok) {
+      showToast(ok ? 'Email copied' : 'Copy failed — select it manually');
+    });
+  });
+
+  /* ---------------- Project filtering ---------------- */
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#projectGrid .project'));
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.filters .chip'));
+  var status = document.getElementById('filterStatus');
+  var activeTag = 'all';
+
+  function labelFor(tag) {
+    for (var i = 0; i < chips.length; i++) {
+      if (chips[i].dataset.tag === tag) return chips[i].textContent.trim();
+    }
+    return tag;
+  }
+
+  function setFilter(tag) {
+    activeTag = tag;
+    var shown = 0;
+
+    cards.forEach(function (card) {
+      var tags = (card.dataset.tags || '').split(/\s+/);
+      var match = tag === 'all' || tags.indexOf(tag) !== -1;
+      card.hidden = !match;
+      if (match) shown++;
+    });
+
+    chips.forEach(function (chip) {
+      var on = chip.dataset.tag === tag;
+      chip.classList.toggle('is-on', on);
+      chip.setAttribute('aria-pressed', String(on));
+    });
+
+    status.textContent = tag === 'all'
+      ? 'Showing all ' + cards.length + ' projects.'
+      : 'Showing ' + shown + ' of ' + cards.length + ' projects tagged ' + labelFor(tag) + '.';
+  }
+
+  document.addEventListener('click', function (event) {
+    var el = event.target.closest('[data-tag]');
+    if (!el) return;
+    var tag = el.dataset.tag;
+    /* Clicking the active tag again clears the filter. */
+    setFilter(tag === activeTag ? 'all' : tag);
+  });
+
+  setFilter('all');
+
+  /* ---------------- Scroll spy ---------------- */
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc-list a'));
+  var targets = links.map(function (link) {
+    return { link: link, el: document.getElementById(link.hash.slice(1)) };
+  }).filter(function (t) { return t.el; });
+
+  var spyQueued = false;
+
+  function updateSpy() {
+    spyQueued = false;
+    var line = 96; /* just below the sticky nav */
+    var atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 4;
+    var active = targets[0];
+
+    targets.forEach(function (t) {
+      if (t.el.getBoundingClientRect().top <= line) active = t;
+    });
+    if (atBottom) active = targets[targets.length - 1];
+
+    targets.forEach(function (t) {
+      var on = t === active;
+      t.link.setAttribute('aria-current', on ? 'true' : 'false');
+    });
+  }
+
+  function queueSpy() {
+    if (spyQueued) return;
+    spyQueued = true;
+    requestAnimationFrame(updateSpy);
+  }
+
+  window.addEventListener('scroll', queueSpy, { passive: true });
+  window.addEventListener('resize', queueSpy);
+  updateSpy();
+
+  /* ---------------- Reveal on scroll ---------------- */
+
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    root.classList.add('reveal-ready');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+    reveals.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------------- Print ---------------- */
+
+  document.getElementById('printBtn').addEventListener('click', function () {
+    window.print();
+  });
+
+  /* Always print the full CV, never a filtered subset. */
+  window.addEventListener('beforeprint', function () {
+    setFilter('all');
+  });
+})();
+</script>
+</body>
+</html>
